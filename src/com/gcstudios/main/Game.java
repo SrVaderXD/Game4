@@ -19,8 +19,8 @@ import javax.swing.JFrame;
 
 import com.gcstudios.entities.Entity;
 import com.gcstudios.entities.Player;
-import com.gcstudios.graficos.Spritesheet;
-import com.gcstudios.graficos.UI;
+import com.gcstudios.graphics.Spritesheet;
+import com.gcstudios.graphics.UI;
 import com.gcstudios.world.World;
 
 public class Game extends Canvas implements Runnable,KeyListener,MouseListener,MouseMotionListener{

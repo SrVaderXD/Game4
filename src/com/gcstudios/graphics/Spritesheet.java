@@ -1,4 +1,4 @@
-package com.gcstudios.graficos;
+package com.gcstudios.graphics;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
