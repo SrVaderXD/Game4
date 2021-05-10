@@ -3,14 +3,7 @@ package com.gcstudios.world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-
-
-import com.gcstudios.entities.Entity;
-
-import com.gcstudios.entities.Player;
 import com.gcstudios.main.Game;
 
 public class World {
@@ -18,7 +11,6 @@ public class World {
 	public static Tile[] tiles;
 	public static int WIDTH,HEIGHT;
 	public static final int TILE_SIZE = 16;
-	
 	
 	public World(String path){
 		try {
@@ -34,8 +26,11 @@ public class World {
 					tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16,yy*16,Tile.TILE_FLOOR);
 					if(pixelAtual == 0xFF000000) {
 						tiles[xx + (yy * WIDTH)] = new FloorTile(xx*16,yy*16,Tile.TILE_FLOOR);
-					}else if(pixelAtual == 0xFFffffff) {
+					}else if(pixelAtual == 0xFFFFFFFF) {
 						tiles[xx + (yy * WIDTH)] = new WallTile(xx*16,yy*16,Tile.TILE_WALL);
+					}else if(pixelAtual == 0xFF0026FF) {
+						Game.player.setX(xx*16);
+						Game.player.setY(yy*16);
 					}
 				}
 			}

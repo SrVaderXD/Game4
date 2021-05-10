@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-
 import com.gcstudios.main.Game;
 import com.gcstudios.world.Camera;
 import com.gcstudios.world.Node;
@@ -14,13 +13,10 @@ import com.gcstudios.world.Vector2i;
 import com.gcstudios.world.World;
 
 public class Entity {
-	
 
-	public static BufferedImage MACA_SPRITE = Game.spritesheet.getSprite(0, 16, 16, 16);
-	public static BufferedImage ENEMY1 = Game.spritesheet.getSprite(16, 16,16,16);
-	public static BufferedImage ENEMY2 = Game.spritesheet.getSprite(32, 16,16,16);
-	public static BufferedImage ENEMY_GHOST = Game.spritesheet.getSprite(48, 16, 16, 16);
-	
+	public static BufferedImage PLAYER_SPRITE_RIGHT = Game.spritesheet.getSprite(0, 32, 16, 16);
+	public static BufferedImage PLAYER_SPRITE_LEFT = Game.spritesheet.getSprite(16, 32, 16, 16);
+
 	protected double x;
 	protected double y;
 	protected int width;
@@ -59,7 +55,6 @@ public class Entity {
 		
 	};
 	
-	
 	public void updateCamera() {
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2),0,World.WIDTH*16 - Game.WIDTH);
 		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2),0,World.HEIGHT*16 - Game.HEIGHT);
@@ -94,7 +89,6 @@ public class Entity {
 	public double calculateDistance(int x1,int y1,int x2,int y2) {
 		return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 	}
-	
 	
 	public void followPath(List<Node> path) {
 		if(path != null) {

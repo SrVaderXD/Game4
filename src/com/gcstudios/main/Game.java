@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JFrame;
-
-
 import com.gcstudios.entities.Entity;
 import com.gcstudios.entities.Player;
 import com.gcstudios.graphics.Spritesheet;
@@ -35,7 +33,6 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	
 	private BufferedImage image;
 	
-
 	public static World world;
 	public static List<Entity> entities;
 	public static Spritesheet spritesheet;
@@ -49,17 +46,14 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		addMouseMotionListener(this);
 		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
-		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		
-		//Inicializando objetos.
+		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);		
 		spritesheet = new Spritesheet("/spritesheet.png");
 		entities = new ArrayList<Entity>();
-		player = new Player(WIDTH/2 - 30,HEIGHT/2,16,16,2,spritesheet.getSprite(0,0,16,16));
+		player = new Player(WIDTH/2 - 30,HEIGHT/2,16,16,1.4,Entity.PLAYER_SPRITE_RIGHT);
 		world = new World("/level1.png");
 		ui = new UI();
-		
 		entities.add(player);
-		
 	}
 	
 	public void initFrame(){
@@ -103,9 +97,6 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		
 	}
 	
-
-
-	
 	public void render(){
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null){
@@ -116,8 +107,6 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		g.setColor(new Color(122,102,255));
 		g.fillRect(0, 0,WIDTH,HEIGHT);
 		
-		/*Renderização do jogo*/
-		//Graphics2D g2 = (Graphics2D) g;
 		world.render(g);
 		Collections.sort(entities,Entity.nodeSorter);
 		for(int i = 0; i < entities.size(); i++) {
@@ -125,7 +114,6 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			e.render(g);
 		}
 		
-		/***/
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0,WIDTH*SCALE,HEIGHT*SCALE,null);
@@ -166,12 +154,22 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.right = true;
+		} else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.left = true;
+		}
+		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		
-		
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.right = false;
+		} else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.left = false;
+		}
 	}
 
 	@Override

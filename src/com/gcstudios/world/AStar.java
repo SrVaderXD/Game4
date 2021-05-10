@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
 public class AStar {
 
 	public static double lastTime = System.currentTimeMillis();
