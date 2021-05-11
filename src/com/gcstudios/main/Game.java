@@ -6,9 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ import com.gcstudios.graphics.Spritesheet;
 import com.gcstudios.graphics.UI;
 import com.gcstudios.world.World;
 
-public class Game extends Canvas implements Runnable,KeyListener,MouseListener,MouseMotionListener{
+public class Game extends Canvas implements Runnable,KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	public static JFrame frame;
@@ -42,22 +39,20 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	
 	public Game(){
 		addKeyListener(this);
-		addMouseListener(this);
-		addMouseMotionListener(this);
 		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
 		
 		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);		
 		spritesheet = new Spritesheet("/spritesheet.png");
 		entities = new ArrayList<Entity>();
-		player = new Player(WIDTH/2 - 30,HEIGHT/2,16,16,1.4,Entity.PLAYER_SPRITE_RIGHT);
+		player = new Player(WIDTH/2 - 30,HEIGHT/2,16,16,1.4,Entity.PLAYER_SPRITE_RIGHT[0]);
 		world = new World("/level1.png");
 		ui = new UI();
 		entities.add(player);
 	}
 	
 	public void initFrame(){
-		frame = new JFrame("Super Mário");
+		frame = new JFrame("Game4");
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
@@ -160,6 +155,10 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			player.left = true;
 		}
 		
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			player.jump = true;
+		}
+		
 	}
 
 	@Override
@@ -177,45 +176,5 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {	
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-	
-	}
-
 	
 }
