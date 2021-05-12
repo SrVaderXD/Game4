@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import com.gcstudios.entities.Enemy;
+import com.gcstudios.entities.Entity;
 import com.gcstudios.main.Game;
 
 public class World {
@@ -35,6 +38,9 @@ public class World {
 					}else if(pixelAtual == 0xFF0026FF) {
 						Game.player.setX(xx*16);
 						Game.player.setY(yy*16);
+					}else if(pixelAtual == 0xFFFF0000) {
+						Enemy e = new Enemy(xx*16, yy*16, 16, 16, 1, Entity.ENENMY_SPRITE_RIGHT);
+						Game.entities.add(e);
 					}
 				}
 			}
