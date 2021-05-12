@@ -2,6 +2,9 @@ package com.gcstudios.entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import com.gcstudios.main.Game;
+import com.gcstudios.world.Camera;
 import com.gcstudios.world.World;
 
 public class Player extends Entity{
@@ -41,6 +44,9 @@ public class Player extends Entity{
 		}
 		
 		jump();
+		
+		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH*16 - Game.WIDTH);
+		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT*16 - Game.HEIGHT);
 		
 	}
 	
