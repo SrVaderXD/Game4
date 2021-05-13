@@ -23,6 +23,9 @@ public class Entity {
 	public static BufferedImage ENENMY_SPRITE_RIGHT = Game.spritesheet.getSprite(32, 0, 16, 16);
 	public static BufferedImage ENENMY_SPRITE_LEFT = Game.spritesheet.getSprite(48, 0, 16, 16);
 
+	public static BufferedImage COIN_SPRITE[] = { Game.spritesheet.getSprite(48, 16, 16, 16),
+			Game.spritesheet.getSprite(64, 16, 16, 16) };
+
 	protected double x;
 	protected double y;
 	protected int width;

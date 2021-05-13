@@ -3,10 +3,15 @@ package com.gcstudios.world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 
+import com.gcstudios.entities.Coin;
 import com.gcstudios.entities.Enemy;
 import com.gcstudios.entities.Entity;
+import com.gcstudios.entities.Player;
+import com.gcstudios.graphics.Spritesheet;
 import com.gcstudios.main.Game;
 
 public class World {
@@ -41,6 +46,9 @@ public class World {
 					} else if (pixelAtual == 0xFFFF0000) {
 						Enemy e = new Enemy(xx * 16, yy * 16, 16, 16, 1, Entity.ENENMY_SPRITE_RIGHT);
 						Game.entities.add(e);
+					} else if (pixelAtual == 0xFFFFD800) {
+						Coin e = new Coin(xx * 16, yy * 16, 16, 16, 0, Entity.COIN_SPRITE[0]);
+						Game.entities.add(e);
 					}
 				}
 			}
@@ -69,8 +77,16 @@ public class World {
 				|| (tiles[x4 + (y4 * World.WIDTH)] instanceof WallTile));
 	}
 
-	public static void restartGame() {
-		// TODO: Aplicar método para reiniciar o jogo corretamente.
+	public static void restartGame(String level) {
+		
+		Player.score = 0;
+		Game.entities.clear();
+		Game.entities = new ArrayList<Entity>();
+		Game.spritesheet = new Spritesheet("/spritesheet.png");
+		Game.player = new Player(WIDTH / 2 - 30, HEIGHT / 2, 16, 16, 1.4, Entity.PLAYER_SPRITE_RIGHT[0]);
+		Game.entities.add(Game.player);
+		Game.world = new World("/"+level);
+
 		return;
 	}
 

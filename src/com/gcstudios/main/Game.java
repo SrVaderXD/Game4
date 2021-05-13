@@ -35,6 +35,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static Spritesheet spritesheet;
 	public static Player player;
 
+	private int currentLevel = 1, maxLevel = 2;
+
 	public UI ui;
 
 	public Game() {
@@ -142,6 +144,33 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 
 		stop();
+	}
+
+	public void restart() {
+		String level = "level" + currentLevel + ".png";
+		World.restartGame(level);
+	}
+
+	public void gameOveR() {
+		if (Player.dead) {
+			Player.dead = false;
+			Player.life--;
+			if (Player.life == 0) {
+				// GameOver
+			}
+			restart();
+		}
+	}
+	
+	public void nextLevel() {
+		/*if something touched by player
+		  currentLevel++
+		  
+		  if(currentLevel > maxLevel)
+		  	current = 0
+		  	
+		  restartGame();
+		*/
 	}
 
 	@Override

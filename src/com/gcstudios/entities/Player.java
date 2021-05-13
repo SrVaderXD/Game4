@@ -12,8 +12,9 @@ public class Player extends Entity {
 	private boolean moved = false;
 	private int gravity = 2;
 	private int dir;
-	
-	public int life = 3;
+
+	public static int life = 3, score = 0;
+	public static boolean dead;
 
 	public boolean jump = false, isJumping = false;
 	public int jumpHeight = 40;
@@ -44,6 +45,7 @@ public class Player extends Entity {
 						jumpHeight = 32;
 						((Enemy) e).death = true;
 						if (((Enemy) e).death) {
+							score += 100;
 							Game.entities.remove(i);
 							break;
 						}
@@ -63,6 +65,7 @@ public class Player extends Entity {
 		}
 
 		jump();
+		collisionWith();
 
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH / 2), 0, World.WIDTH * 16 - Game.WIDTH);
 		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT / 2), 0, World.HEIGHT * 16 - Game.HEIGHT);
@@ -117,6 +120,26 @@ public class Player extends Entity {
 				isJumping = false;
 				jump = false;
 				jumpFrames = 0;
+			}
+		}
+	}
+
+	private void collisionWith() {
+		for (int i = 0; i < Game.entities.size(); i++) {
+
+			Entity e = Game.entities.get(i);
+
+			if (e instanceof Enemy) {
+				if (isColidding(this, e)) {
+					dead = true;
+				}
+			}
+
+			if (e instanceof Coin) {
+				if (isColidding(this, e)) {
+					score += 50;
+					Game.entities.remove(i);
+				}
 			}
 		}
 	}
