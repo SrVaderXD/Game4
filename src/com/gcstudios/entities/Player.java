@@ -10,15 +10,16 @@ public class Player extends Entity {
 
 	public boolean right, left;
 	private boolean moved = false;
-	private int gravity = 2;
 	private int dir;
 
 	public static int life = 3, score = 0;
 	public static boolean dead;
 
+	private double gravity = 0.4;
+	private double vspd = 0;
+	private boolean grounded;
+
 	public boolean jump = false, isJumping = false;
-	public int jumpHeight = 40;
-	public int jumpFrames = 0;
 
 	private int framesWalk = 0, maxFramesWalk = 15, maxSprite = 2, curSprite = 0;
 
@@ -28,32 +29,9 @@ public class Player extends Entity {
 
 	public void tick() {
 		depth = 2;
-
 		moved = false;
-
-		if (World.isFree((int) x, (int) (y + gravity)) && isJumping == false) {
-			y += gravity;
-
-			for (int i = 0; i < Game.entities.size(); i++) {
-
-				Entity e = Game.entities.get(i);
-
-				if (e instanceof Enemy) {
-					if (Entity.isColidding(this, e)) {
-
-						isJumping = true;
-						jumpHeight = 32;
-						((Enemy) e).death = true;
-						if (((Enemy) e).death) {
-							score += 100;
-							Game.entities.remove(i);
-							break;
-						}
-					}
-				}
-			}
-		}
-
+		System.out.println(grounded);
+		
 		if (right && World.isFree((int) (x + speed), (int) y)) {
 			x += speed;
 			dir = 1;
@@ -64,6 +42,8 @@ public class Player extends Entity {
 			moved = true;
 		}
 
+		lifeUP();
+		isGrounded();
 		jump();
 		collisionWith();
 
@@ -97,30 +77,38 @@ public class Player extends Entity {
 
 	private void jump() {
 
-		if (jump) {
-
-			if (!World.isFree(this.getX(), this.getY() + 1)) {
-				isJumping = true;
-			} else {
-				jump = false;
-			}
+		vspd += gravity;
+		if (!World.isFree((int) x, (int) (y + 1)) && jump) {
+			vspd = -6;
+			jump = false;
+			isJumping = true;
 		}
 
-		if (isJumping) {
-			if (World.isFree(this.getX(), this.getY() - 2)) {
-				y -= 2;
-				jumpFrames += 2;
+		if (!World.isFree((int) x, (int) (y + vspd))) {
 
-				if (jumpFrames == jumpHeight) {
-					isJumping = false;
-					jump = false;
-					jumpFrames = 0;
-				}
+			isJumping = true;
+			
+			int signVsp = 0;
+			if (vspd >= 0) {
+				signVsp = 1;
 			} else {
-				isJumping = false;
-				jump = false;
-				jumpFrames = 0;
+				signVsp = -1;
 			}
+			while (World.isFree((int) x, (int) (y + signVsp))) {
+				y += signVsp;
+			}
+			vspd = 0;
+			isJumping = false;
+		}
+
+		y += vspd;
+	}
+	
+	private void isGrounded() {
+		if(!World.isFree((int) x, (int) (y + 1)) && !isJumping) {
+			grounded = true;
+		} else if(World.isFree((int) x, (int) (y + 1))){
+			grounded = false;
 		}
 	}
 
@@ -131,7 +119,13 @@ public class Player extends Entity {
 
 			if (e instanceof Enemy) {
 				if (isColidding(this, e)) {
-					dead = true;
+					if(grounded)
+						dead = true;
+					if(!grounded) {
+						vspd = -5;
+						score+=100;
+						Game.entities.remove(i);
+					}
 				}
 			}
 
@@ -141,6 +135,12 @@ public class Player extends Entity {
 					Game.entities.remove(i);
 				}
 			}
+		}
+	}
+
+	private void lifeUP() {
+		if (score >= 1000) {
+			life++;
 		}
 	}
 }

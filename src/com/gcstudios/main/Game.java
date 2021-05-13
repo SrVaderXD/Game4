@@ -48,7 +48,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		spritesheet = new Spritesheet("/spritesheet.png");
 		entities = new ArrayList<Entity>();
 		player = new Player(WIDTH / 2 - 30, HEIGHT / 2, 16, 16, 1.4, Entity.PLAYER_SPRITE_RIGHT[0]);
-		world = new World("/level1.png");
+		world = new World("/level"+currentLevel+".png");
 		ui = new UI();
 		entities.add(player);
 	}
@@ -158,7 +158,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		if (Player.dead) {
 			Player.dead = false;
 			Player.life--;
-			if (Player.life == 0) {
+			if (Player.life < 0) {
 				// GameOver
 				Player.life = 3;
 			}
