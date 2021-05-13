@@ -90,6 +90,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.tick();
 		}
 
+		GameOver();
+		nextLevel();
+
 	}
 
 	public void render() {
@@ -151,26 +154,26 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		World.restartGame(level);
 	}
 
-	public void gameOveR() {
+	public void GameOver() {
 		if (Player.dead) {
 			Player.dead = false;
 			Player.life--;
 			if (Player.life == 0) {
 				// GameOver
+				Player.life = 3;
 			}
 			restart();
 		}
 	}
-	
+
 	public void nextLevel() {
-		/*if something touched by player
-		  currentLevel++
-		  
-		  if(currentLevel > maxLevel)
-		  	current = 0
-		  	
-		  restartGame();
-		*/
+		/*
+		 * if something touched by player currentLevel++
+		 * 
+		 * if(currentLevel > maxLevel) current = 0
+		 * 
+		 * restartGame();
+		 */
 	}
 
 	@Override
