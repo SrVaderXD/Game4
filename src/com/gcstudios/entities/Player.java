@@ -30,7 +30,6 @@ public class Player extends Entity {
 	public void tick() {
 		depth = 2;
 		moved = false;
-		System.out.println(grounded);
 		
 		if (right && World.isFree((int) (x + speed), (int) y)) {
 			x += speed;
@@ -46,7 +45,7 @@ public class Player extends Entity {
 		isGrounded();
 		jump();
 		collisionWith();
-
+		
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH / 2), 0, World.WIDTH * 16 - Game.WIDTH);
 		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT / 2), 0, World.HEIGHT * 16 - Game.HEIGHT);
 
@@ -140,6 +139,7 @@ public class Player extends Entity {
 
 	private void lifeUP() {
 		if (score >= 1000) {
+			score = 0;
 			life++;
 		}
 	}
